@@ -10,16 +10,20 @@ import org.spongepowered.api.config.DefaultConfig;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
+import org.spongepowered.api.event.game.state.GameStartingServerEvent;
+import org.spongepowered.api.plugin.Dependency;
 import org.spongepowered.api.plugin.Plugin;
 
 import com.google.inject.Inject;
 
 import io.github.axle2005.blockplacerestrictor.commands.CommandRegister;
 import io.github.axle2005.blockplacerestrictor.listeners.ListenersRegister;
+import me.ryanhamshire.griefprevention.GriefPrevention;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
 
-@Plugin(id = "blockplacerestrictor", name = "BlockPlaceRestrictor")
+@Plugin(id = "blockplacerestrictor", name = "BlockPlaceRestrictor", dependencies = {
+		@Dependency(id = "griefprevention", optional = true), })
 public class BlockPlaceRestrictor {
 
 	@Inject
@@ -30,9 +34,12 @@ public class BlockPlaceRestrictor {
 	@DefaultConfig(sharedRoot = false)
 	private ConfigurationLoader<CommentedConfigurationNode> configManager;
 
-	public Config config;
-	public List<String> listRestrictedBlocks = new ArrayList<String>();
-	public List<String> listPnbrBlocks = new ArrayList<String>();
+	private Config config;
+	private List<String> listRestrictedBlocks = new ArrayList<String>();
+	private List<String> listPnbrBlocks = new ArrayList<String>();
+	private List<String> listClaim = new ArrayList<String>();
+	
+	private GriefPrevention griefPrevention;
 
 	ListenersRegister register;
 	@Inject
@@ -51,6 +58,19 @@ public class BlockPlaceRestrictor {
 		register = new ListenersRegister(this);
 		register.registerEvent("PlaceBlock");
 	}
+	@Listener
+	public void gameStarting(GameStartingServerEvent event) {
+
+		try {
+			Class.forName("me.ryanhamshire.griefprevention.GriefPrevention");
+			griefPrevention = GriefPrevention.instance;
+			getLogger().info("GriefPrevention Integration Successful!");
+		} catch (ClassNotFoundException e) {
+			getLogger().info("GriefPrevention Integration Failed!");
+		}
+		
+
+	}
 
 	public Logger getLogger() {
 		return log;
@@ -61,5 +81,22 @@ public class BlockPlaceRestrictor {
 			return listRestrictedBlocks;
 		} else
 			return listRestrictedBlocks;
+	}
+	public GriefPrevention getGriefPrevention() {
+		//GriefPrevention grief = GriefPrevention.instance;
+		return griefPrevention;
+	}
+	public Config getConfig()
+	{
+		return config;
+	}
+	public List<String> getPnbrList(){
+		return listPnbrBlocks;
+	}
+	public List<String> getRestrictedList(){
+		return listRestrictedBlocks;
+	}
+	public List<String> getClaimList(){
+		return listClaim;
 	}
 }

@@ -25,6 +25,8 @@ public class CommandBlockInfo implements CommandExecutor {
 		if (src instanceof Player) {
 			src.sendMessage(
 					Text.of(((Player) src).getItemInHand(HandTypes.MAIN_HAND).get().getItem().getId().toString()));
+			
+		
 
 		}
 		return CommandResult.success();

@@ -21,7 +21,7 @@ public class CommandRegister {
 		CommandSpec pnbradd = CommandSpec.builder().permission(name + ".add")
 				.description(Text.of("Add Block to PlaceNearBlockRestrictor"))
 				.arguments(GenericArguments.onlyOne(GenericArguments.string(Text.of("Block1"))),
-						GenericArguments.onlyOne(GenericArguments.string(Text.of("Block2"))))
+						GenericArguments.onlyOne(GenericArguments.integer(Text.of("Block2"))))
 				.executor(new CommandPnbrAdd(plugin, config)).build();
 		
 		CommandSpec blockinfo = CommandSpec.builder().permission(name + ".add")

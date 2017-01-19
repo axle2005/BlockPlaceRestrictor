@@ -34,11 +34,11 @@ public class CommandPlaceAdd implements CommandExecutor {
 		}
 		if (args.equalsIgnoreCase("hand")) {
 			if (src instanceof Player) {
-				if (!(plugin.listRestrictedBlocks.contains(((Player) src).getItemInHand(HandTypes.MAIN_HAND).get()
+				if (!(plugin.getRestrictedList().contains(((Player) src).getItemInHand(HandTypes.MAIN_HAND).get()
 						.getItem().getType().getId().toString()))) {
-					plugin.listRestrictedBlocks.add(((Player) src).getItemInHand(HandTypes.MAIN_HAND).get().getItem()
+					plugin.getRestrictedList().add(((Player) src).getItemInHand(HandTypes.MAIN_HAND).get().getItem()
 							.getType().getId().toString());
-					config.setValueList("WorldRestrictor", plugin.listRestrictedBlocks);
+					config.setValueList("WorldRestrictor", plugin.getRestrictedList());
 					config.saveConfig();
 					src.sendMessage(Text.of("Added Block to List"));
 				}
@@ -49,9 +49,9 @@ public class CommandPlaceAdd implements CommandExecutor {
 				return CommandResult.empty();
 			}
 		} else {
-			if (!(plugin.listRestrictedBlocks.contains(args))) {
-				plugin.listRestrictedBlocks.add(args);
-				config.setValueList("WorldRestrictor", plugin.listRestrictedBlocks);
+			if (!(plugin.getRestrictedList().contains(args))) {
+				plugin.getRestrictedList().add(args);
+				config.setValueList("WorldRestrictor", plugin.getRestrictedList());
 				config.saveConfig();
 				src.sendMessage(Text.of("Added Block to List"));
 			}

@@ -23,7 +23,7 @@ public class Config {
 	CommentedConfigurationNode rootnode;
 	ConfigurationLoader<CommentedConfigurationNode> configManager;
 
-	List<String> listPlaceHolder = new ArrayList<String>(Arrays.asList("PlaceHolder"));
+	List<String> listPlaceHolder = new ArrayList<String>(Arrays.asList("Place|Holder"));
 
 	public Config(BlockPlaceRestrictor plugin, Path defaultConfig,
 			ConfigurationLoader<CommentedConfigurationNode> configManager) {

@@ -31,10 +31,10 @@ public class CommandPnbrAdd implements CommandExecutor {
 		
 		String commit = block1 +"|"+block2;
 		
-		if(!(plugin.listPnbrBlocks.contains(commit)))
+		if(!(plugin.getPnbrList().contains(commit)))
 		{
-			plugin.listPnbrBlocks.add(commit);
-			config.setValueList("PlaceNearBlockRestrictor", plugin.listPnbrBlocks);
+			plugin.getPnbrList().add(commit);
+			config.setValueList("PlaceNearBlockRestrictor", plugin.getPnbrList());
 			config.saveConfig();
 			src.sendMessage(Text.of("Added Blocks to List"));
 			return CommandResult.success();
